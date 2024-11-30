@@ -32,4 +32,4 @@
 ---
 
 ## Link URL
-https://6530250140.github.io/standards
+<https://6530250140.github.io/standards>
