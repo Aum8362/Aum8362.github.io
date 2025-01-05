@@ -1,3 +1,3 @@
 # Happy New Year 2025
 
-- ![HNY](img/HNY.png)
+- ![HNY](img/HNY-1.png)
