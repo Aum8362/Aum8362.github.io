@@ -18,7 +18,7 @@
 ### ภาพ/วิดีโอ กิจกรรม 🎞️
 ![bgame-seven](img/bgame-seven.jpg)
 
-[👉 Click to watch the video 📽️](https://drive.google.com/file/d/1swEFVGy7NZIjdUpkvj9tQjwjgMvlxWBd/view?usp=sharing)
+[👉 Click to watch the video 📽️](https://www.youtube.com/embed/STPLUa_MIZQ?si=wtrchwrzYyePwCC8)
 
 ---
 
