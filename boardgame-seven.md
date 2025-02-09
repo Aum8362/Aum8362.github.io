@@ -16,7 +16,7 @@
 - ผู้ที่มาถึงเส้นชัยก่อนคือผู้ชนะ 🏅
 
 ### ภาพ/วิดีโอ กิจกรรม 🎞️
-![bgame-seven](img/bgame-seven.jpg)
+![bgame-seven](img_bg/bgame-seven.jpg)
 
 [👉 Click to watch the video 📽️](https://www.youtube.com/embed/STPLUa_MIZQ?si=wtrchwrzYyePwCC8)
 
@@ -55,6 +55,6 @@
 - [go to page >](https://panita18.github.io/boardgame-seven) 6530250417 - Panita Yapolha
 - [go to page >](https://wariisara.github.io/boardgame-seven) 6530250468 - Warisara Yamma
 - [go to page >](https://suphat00.github.io/boardgame-seven) 6530250603 - Suphattra Prasomsap
-- [go to page >]() 6530250565 - Panissara Poungurai
+- [go to page >](https://aum8362.github.io/boardgame-seven) 6530250565 - Panissara Poungurai
 
 ---
