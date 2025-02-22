@@ -14,4 +14,4 @@
 <https://aum8362.github.io/boardgame-seven>
 
 ## Link Pao-Elections
-<https://aum8362.github.io/pao-elections.html>
+<https://aum8362.github.io/pao-elections>
