@@ -1,99 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025 PAO Elections</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: "Kanit", serif;
-        }
-        .header-image {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            background: url('/img_pe/1.jpg') no-repeat center center;
-            background-size: cover;
-        }
-        .content {
-            padding: 20px;
-        }
-        h2 {
-            text-align: center;
-        }
-        h3 {
-            text-align: center;
-        }
-        ul {
-            text-align: left;
-            padding-left: 30px; /* เพิ่มระยะห่างจากขอบ */
-        }
-        .main-image {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-        .main-image img {
-            width: 80%; /* ปรับขนาดภาพใหญ่ด้านนอก */
-            max-width: 800px; /* กำหนดความกว้างสูงสุด */
-            border-radius: 10px;
-        }
-        .container {
-            display: flex;
-            justify-content: space-between; /* เพิ่มระยะห่างระหว่างกรอบ */
-            gap: 10px; /* ช่องว่างระหว่างกรอบ */
-            padding: 10px;
-        }
-        .box-img {
-            width: 80%; /* ปรับขนาดภาพใหญ่ด้านนอก */
-            max-width: 800px; /* กำหนดความกว้างสูงสุด */
-            border-radius: 10px;
-        }
-        a {
-            padding: 5px;
-        }
-        .card-box {
-            background-color: #eeeeee;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px auto;
-            max-width: 650px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .card-box ul {
-            text-align: left;
-            padding-left: 20px;
-        }
-        .card-box li {
-            margin-bottom: 8px;
-        }
-    </style>
-</head>
-<body>
-    <div class="header-image"></div>
-    <div class="content">
-        <h2>การเลือกตั้ง สมาชิกสภาองค์การบริหารส่วนจังหวัด และนายกองค์การบริหารส่วนจังหวัดชลบุรี</h2>
-        <h3>วันเสาร์ที่ 1 กุมภาพันธ์ พ.ศ.2568</h3>
-        
-        <div class="card-box">
-            <h2 style="text-align: center;">รายละเอียดของสถานที่</h2>
-            <ul>
-                <li><strong>สถานที่เลือกตั้ง :</strong> อาคารฉลองสิริราชสมบัติครบ 60 ปี โรงเรียนเทศบาลบ้านศรีมหาราชา</li>
-                <li><strong>ที่เลือกตั้ง :</strong> หน่วยเลือกตั้งที่ 3 เทศบาลศรีราชา อำเภอศรีราชา จังหวัดชลบุรี เขตเลือกตั้งที่ 1</li>
-            </ul>
-        </div>
+# 2025 PAO Elections
 
-        <h2 style="text-align: center;">ภาพกิจกรรม</h2>
+## การเลือกตั้ง สมาชิกสภาองค์การบริหารส่วนจังหวัด และนายกองค์การบริหารส่วนจังหวัดชลบุรี
 
-        <div class="main-image">
-            <img src="img_pe/2.jpg" alt="ภาพหลักกิจกรรม">
-        </div>
+### วันเสาร์ที่ 1 กุมภาพันธ์ พ.ศ. 2568
 
-        <div class="main-image">
-            <img src="img_pe/3.jpg" alt="ภาพเพิ่มเติม">
-        </div>
-    </div>
-</body>
-</html>
+---
+
+## รายละเอียดของสถานที่
+
+- **สถานที่เลือกตั้ง:** อาคารฉลองสิริราชสมบัติครบ 60 ปี โรงเรียนเทศบาลบ้านศรีมหาราชา  
+- **ที่เลือกตั้ง:** หน่วยเลือกตั้งที่ 3 เทศบาลศรีราชา อำเภอศรีราชา จังหวัดชลบุรี เขตเลือกตั้งที่ 1
+
+---
+
+## ภาพกิจกรรม
+
+![ภาพหลักกิจกรรม](img_pe/2.jpg)
+
+![ภาพเพิ่มเติม](img_pe/3.jpg)
