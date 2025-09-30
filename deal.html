@@ -1,178 +1,11 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Birthday Countdown</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&family=Charm:wght@400;700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg-color: #ffe8e8;
-  --envelope-color: #fff0f0;
-  --flap-color: #fff;
-  --card-color: #fff;
-  --accent-color: #ff66a3;
-  --shadow-color: rgba(0,0,0,0.1);
-  --input-border-color: #ffc4d8;
-}
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background: var(--bg-color);
-  font-family:"Charm", cursive;
-  gap:30px;
-  overflow:hidden;
-}
-.envelope{
-  position:relative;
-  width:450px;
-  height:300px;
-  background: var(--envelope-color);
-  border-radius:20px;
-  box-shadow:0 15px 35px var(--shadow-color);
-  overflow:visible;
-}
-.decoration {
-  position: absolute;
-  width: 15px; height: 15px;
-  background: gold;
-  border-radius: 50%;
-  box-shadow: 0 0 5px #ffcc00;
-  z-index: 10;
-  opacity: 0.8;
-}
-.decoration:nth-child(1){ top: 10px; left: -20px; transform: rotate(-10deg); }
-.decoration:nth-child(2){ bottom: 10px; right: -20px; transform: rotate(20deg); background: var(--accent-color); }
-.decoration:nth-child(3){ top: -15px; right: 50px; background: pink; }
-
-.flap{
-  position:absolute;
-  top:0; left:50%;
-  width:105%; height:180px;
-  background: var(--flap-color);
-  clip-path:polygon(0 100%,50% 0,100% 100%);
-  border-radius:15px;
-  border-bottom: 3px solid var(--accent-color);
-  z-index: 2;
-  transform: translateX(-50%);
-  transform-origin: top center;
-  transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-.card{
-  position:absolute;
-  left:50%; top:40px;
-  width:85%; height:220px;
-  background: var(--card-color);
-  border-radius:20px;
-  box-shadow:0 10px 20px var(--shadow-color);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:15px;
-  opacity:0;
-  text-align:center;
-  border: 3px dashed var(--accent-color);
-  font-family: 'Kanit', sans-serif;
-  transform: translateX(-50%) translateY(100%);
-  transition: transform 1.2s ease-out, opacity 0.8s;
-}
-.card h2{margin:0;font-size:36px;color:var(--accent-color);}
-.card p{margin:0;font-size:60px;font-weight:bold; color:#333;}
-.card small{color:#666;font-size:22px}
-
-.code-panel{
-  display:flex;
-  gap:15px;
-  z-index: 20;
-  font-family: 'Kanit', sans-serif;
-}
-.code-panel input{
-  width:140px;
-  padding:12px;
-  font-size:24px;
-  text-align:center;
-  letter-spacing:6px;
-  border-radius:12px;
-  border:3px solid var(--input-border-color);
-  outline:none;
-  transition:border-color .3s;
-}
-.code-panel input:focus{
-  border-color: var(--accent-color);
-  box-shadow: 0 0 8px rgba(255,102,163,0.5);
-}
-.code-panel button{
-  padding:12px 25px;
-  border:0;
-  border-radius:12px;
-  background: var(--accent-color);
-  color:#fff;
-  font-size:20px;
-  font-weight:bold;
-  cursor:pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  transition:background .3s, transform .1s;
-}
-.code-panel button:active{ transform: translateY(2px); box-shadow: none;}
-
-.envelope.open .flap{transform: translateX(-50%) rotateX(-180deg);}
-.envelope.open .card{transform: translateX(-50%) translateY(0); opacity:1;}
-
-.confetti{
-  position:absolute;
-  width:12px;height:12px;
-  background:var(--color);
-  border-radius: 50% 50% 50% 0;
-  top:0; left:50%;
-  opacity:0.9;
-  animation:fall 3s linear forwards;
-  pointer-events:none; /* ป้องกันบังปุ่ม */
-  z-index: 15;
-}
-@keyframes fall{
-  0%{transform:translateX(0) translateY(0) rotate(0);}
-  100%{transform:translateX(var(--x)) translateY(100vh) rotate(720deg);}
-}
-</style>
-</head>
-<body>
-<div class="envelope" id="envelope">
-  <div class="decoration"></div>
-  <div class="decoration"></div>
-  <div class="decoration"></div>
-  <div class="flap"></div>
-  <div class="card" id="card">
-    <h2>Countdown!</h2>
-    <p id="dcount">D-4</p>
-    <small>to your birthday</small>
-  </div>
-</div>
-
 <div class="code-panel">
   <input id="code" type="text" inputmode="numeric" maxlength="4" placeholder="****" /> 
-  <button id="openBtn">เปิดการ์ด</button>
 </div>
 
 <script>
 const SECRET = "0410";
 const env = document.getElementById("envelope");
-const btn = document.getElementById("openBtn");
 const input = document.getElementById("code");
-const dcount = document.getElementById("dcount");
-
-function daysUntilBirthday(month=10, day=4){
-  const now = new Date();
-  let year = now.getFullYear();
-  let target = new Date(year, month-1, day);
-  if(target < now){ target.setFullYear(year+1); }
-  return Math.ceil((target - now)/(1000*60*60*24));
-}
-dcount.textContent = "D-" + daysUntilBirthday(10,4);
 
 function launchConfetti(){
   const colors = ["#ff66a3","#ff99c4","#ff4d4d","#ffcc00","#ffffff"];
@@ -199,12 +32,9 @@ function tryOpen(){
   }
 }
 
-btn.addEventListener("click",tryOpen);
-input.addEventListener("keydown",e=>{
+input.addEventListener("keydown", e=>{
   if(e.key==="Enter") tryOpen();
 });
 
 window.onload = ()=> input.focus();
 </script>
-</body>
-</html>
