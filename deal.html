@@ -37,19 +37,23 @@ body{
   justify-content:center;
   align-items:center;
 }
-
-/* ข้อความ Secret Card ก่อนเปิด */
+/* Secret Card ก่อนเปิด */
 .secret-text {
   position:absolute;
   top:50%; left:50%;
   transform: translate(-50%,-50%);
   font-family: 'Dancing Script', cursive;
   font-size:48px;
-  color: var(--accent-color);
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  color: #ff66a3;
+  text-shadow: 2px 2px 4px rgba(255,102,163,0.3);
   animation: float 2s ease-in-out infinite alternate;
   pointer-events:none;
   z-index: 5;
+  padding:20px 40px;
+  border-radius:20px;
+  /* สีพื้นหลังแบบ gradient น่ารักเข้ากับตัวอักษร */
+  background: linear-gradient(135deg, #ffccf2, #ff99c4);
+  box-shadow: 0 6px 15px rgba(255,102,163,0.4);
 }
 
 /* แอนิเมชั่นเด้งเล็กๆ */
@@ -108,20 +112,21 @@ body{
 .envelope.open .card{transform: translate(-50%, -50%) translateY(0); opacity:1;}
 .envelope.open .secret-text{opacity:0; transition: opacity 0.5s ease;}
 
-.confetti{
+/* ลูกโป่ง/ดอกไม้ */
+.balloon{
   position:absolute;
-  width:12px;height:12px;
+  width:20px; height:30px;
   background:var(--color);
-  border-radius: 50% 50% 50% 0;
-  top:0; left:50%;
+  border-radius:50% 50% 50% 50%;
+  bottom:0;
   opacity:0.9;
-  animation:fall 3s linear forwards;
+  animation:rise 4s linear forwards;
   pointer-events:none;
-  z-index: 15;
+  z-index:15;
 }
-@keyframes fall{
-  0%{transform:translateX(0) translateY(0) rotate(0);}
-  100%{transform:translateX(var(--x)) translateY(100vh) rotate(720deg);}
+@keyframes rise{
+  0%{transform: translateY(0) rotate(0deg);}
+  100%{transform: translateY(-350px) rotate(360deg);}
 }
 </style>
 </head>
@@ -145,7 +150,6 @@ const env = document.getElementById("envelope");
 const input = document.getElementById("code");
 const dcount = document.getElementById("dcount");
 
-// คำนวณวันถึงวันเกิด
 function daysUntilBirthday(month=10, day=4){
   const now = new Date();
   let year = now.getFullYear();
@@ -155,18 +159,17 @@ function daysUntilBirthday(month=10, day=4){
 }
 dcount.textContent = "D-" + daysUntilBirthday(10,4);
 
-// พลุ/ดอกไม้ตก
-function launchConfetti(){
-  const colors = ["#ff66a3","#ff99c4","#ff4d4d","#ffcc00","#ffffff"];
-  for(let i=0;i<100;i++){
-    const conf = document.createElement("div");
-    conf.classList.add("confetti");
-    conf.style.setProperty("--color",colors[Math.floor(Math.random()*colors.length)]);
-    conf.style.setProperty("--x", (Math.random()*800-400)+"px"); 
-    conf.style.left = (window.innerWidth/2)+"px";
-    conf.style.top = "0px";
-    document.body.appendChild(conf);
-    setTimeout(()=>conf.remove(),3000);
+// ลูกโป่ง/ดอกไม้
+function launchBalloons(){
+  const colors = ["#ff66a3","#ff99c4","#ff4d4d","#ffcc00","#ffffff","#ffb3e6"];
+  for(let i=0;i<30;i++){
+    const b = document.createElement("div");
+    b.classList.add("balloon");
+    b.style.setProperty("--color", colors[Math.floor(Math.random()*colors.length)]);
+    b.style.left = (Math.random()*400+25)+"px"; // กระจายรอบการ์ด
+    b.style.animationDuration = (3+Math.random()*2)+"s";
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),4000);
   }
 }
 
@@ -174,7 +177,7 @@ function launchConfetti(){
 function tryOpen(){
   if(input.value === SECRET){
     env.classList.add("open");
-    setTimeout(launchConfetti, 500);
+    setTimeout(launchBalloons, 500);
   } else {
     alert("รหัสไม่ถูกต้อง 💔 ลองดูดีๆ นะคะ");
     input.value="";
