@@ -1,11 +1,19 @@
-```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Birthday Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&family=Charm:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-color: #fcebeb; /* Light Pink/Creamy background */
+      --envelope-color: #ffe0e0; /* Softer Envelope */
+      --flap-color: #ffffff;
+      --card-color: #ffffff;
+      --accent-color: #ff69b4; /* Hot Pink/Cute Accent */
+      --shadow-color: rgba(0,0,0,0.15);
+    }
     body{
       margin:0;
       height:100vh;
@@ -13,152 +21,241 @@
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      background:#0f1724;
-      font-family:"Kanit",sans-serif;
-      gap:20px;
+      background: var(--bg-color);
+      font-family:"Charm", cursive; /* Use a cuter font */
+      gap:30px;
       overflow:hidden;
+      transition: background 1s;
     }
     .envelope{
       position:relative;
-      width:640px;
-      height:400px;
-      background:#f7f6f2;
-      border-radius:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.5);
-      overflow:hidden;
+      width:400px; /* Reduced width for cuter proportion */
+      height:250px; /* Reduced height */
+      background: var(--envelope-color);
+      border-radius:20px;
+      box-shadow:0 15px 35px var(--shadow-color);
+      overflow:visible; /* Allow decorations to show */
+      transition: box-shadow 1s;
     }
+    .envelope:hover {
+      box-shadow:0 20px 50px rgba(255,105,180,0.4); /* Pink shadow on hover */
+    }
+    /* Cute Decorations (Simplified Flowers/Stars) */
+    .decoration {
+      position: absolute;
+      width: 20px; height: 20px;
+      background: gold;
+      border-radius: 50%;
+      box-shadow: 0 0 5px #ffcc00;
+      z-index: 10;
+    }
+    .decoration::before {
+      content: '';
+      position: absolute;
+      top: -10px; left: 5px;
+      width: 10px; height: 10px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      transform: rotate(45deg);
+    }
+    .decoration:nth-child(1){ top:-10px; left: -10px; transform: rotate(-15deg); }
+    .decoration:nth-child(2){ bottom:-10px; right: -10px; transform: rotate(30deg); background: var(--accent-color); }
+
     .flap{
       position:absolute;
       top:0; left:50%;
       transform:translateX(-50%);
-      width:110%; height:240px;
-      background:#fff;
-      clip-path:polygon(0 100%,50% 0,100% 100%); /* สามเหลี่ยมชิดบน */
-      border-radius:10px;
-      transition:transform 1s;
+      width:110%; height:150px; /* Adjusted size */
+      background: var(--flap-color);
+      clip-path:polygon(0 100%,50% 0,100% 100%);
+      border-radius:15px;
+      transition:transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy transition */
       transform-origin:50% 0;
+      z-index: 2;
     }
     .card{
       position:absolute;
-      left:50%; top:60px;
-      transform:translateX(-50%) translateY(120%);
-      width:80%; height:280px;
-      background:#fff;
-      border-radius:16px;
-      box-shadow:0 20px 40px rgba(0,0,0,0.5);
+      left:50%; top:20px; /* Start position inside envelope */
+      transform:translateX(-50%) translateY(100%);
+      width:85%; height:200px;
+      background: var(--card-color);
+      border-radius:15px;
+      box-shadow:0 10px 20px var(--shadow-color);
       display:flex;
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      gap:20px;
-      transition:transform 1s,opacity .5s;
+      gap:10px;
+      padding: 10px;
+      transition:transform 1.2s ease-out,opacity .8s;
       opacity:0;
       text-align:center;
+      z-index: 1;
+      border: 3px solid var(--accent-color); /* Cute border */
     }
-    .card h2{margin:0;font-size:32px;color:#111;}
-    .card p{margin:0;font-size:60px;font-weight:bold;}
-    .card small{color:#555;font-size:20px}
+    .card h2{margin:0;font-size:36px;color:var(--accent-color); font-family: 'Kanit', sans-serif;}
+    .card p{margin:0;font-size:70px;font-weight:bold; color:#333;}
+    .card small{color:#666;font-size:20px; font-family: 'Kanit', sans-serif;}
     .code-panel{
       display:flex;
       gap:15px;
+      font-family: 'Kanit', sans-serif;
     }
     .code-panel input{
-      width:160px;
-      padding:10px;
-      font-size:22px;
+      width:140px;
+      padding:12px;
+      font-size:24px;
       text-align:center;
       letter-spacing:6px;
-      border-radius:10px;
-      border:1px solid #aaa;
+      border-radius:12px;
+      border:2px solid var(--accent-color);
+      outline:none;
+      transition:border-color .3s;
+    }
+    .code-panel input:focus{
+      border-color: #ff007f;
+      box-shadow: 0 0 5px var(--accent-color);
     }
     .code-panel button{
-      padding:10px 20px;
+      padding:12px 25px;
       border:0;
-      border-radius:10px;
-      background:#ff6b6b;
+      border-radius:12px;
+      background: var(--accent-color);
       color:#fff;
-      font-size:18px;
+      font-size:20px;
       font-weight:bold;
       cursor:pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition:background .3s, transform .1s;
     }
+    .code-panel button:active{ transform: translateY(2px); box-shadow: none;}
+
+    /* Open State */
     .envelope.open .flap{transform:translateX(-50%) rotateX(-180deg);}
     .envelope.open .card{transform:translateX(-50%) translateY(0);opacity:1;}
-    /* confetti */
+    body.fireworks-active { background: #000033; } /* Dark background for fireworks effect */
+
+    /* Fireworks/Confetti */
     .confetti{
       position:absolute;
-      width:10px;height:20px;
+      width:5px;height:5px;
       background:var(--color);
-      top:0; left:50%;
-      opacity:0.9;
-      animation:fall 3s linear forwards;
+      border-radius: 50%;
+      top:50%; left:50%;
+      opacity:0;
+      animation:explode var(--duration) ease-out forwards;
+      z-index: 999;
     }
-    @keyframes fall{
-      0%{transform:translateX(0) translateY(0) rotate(0);}
-      100%{transform:translateX(var(--x)) translateY(100vh) rotate(720deg);}
+    @keyframes explode{
+      0%{transform:translateX(0) translateY(0) scale(1); opacity:1;}
+      100%{transform:translateX(var(--x)) translateY(var(--y)) scale(0); opacity:0;}
     }
   </style>
 </head>
 <body>
   <div class="envelope" id="envelope">
+    <div class="decoration" style="top:10px; left:10px;"></div>
+    <div class="decoration" style="bottom:10px; right:10px;"></div>
+    <div class="decoration" style="top: -15px; right: 50px; background: pink;"></div>
+    
     <div class="flap"></div>
 
     <div class="card" id="card">
-      <h2>Countdown</h2>
+      <h2>🎉 Happy Birthday! 🎉</h2>
       <p id="dcount">D-4</p>
-      <small>to Happy Birthday</small>
+      <small>ใกล้ถึงวันเกิดแล้วนะ</small>
     </div>
   </div>
 
   <div class="code-panel">
     <input id="code" type="text" maxlength="4" placeholder="****" />
-    <button id="openBtn">Open</button>
+    <button id="openBtn">เปิดการ์ด</button>
   </div>
 
   <script>
-    const SECRET = "0410";
+    const SECRET = "0410"; // วันที่ 4 เดือน 10
+    const BIRTHDAY_MONTH = 10;
+    const BIRTHDAY_DAY = 4;
+
     const env = document.getElementById("envelope");
     const btn = document.getElementById("openBtn");
     const input = document.getElementById("code");
     const dcount = document.getElementById("dcount");
+    const body = document.body;
 
-    function daysUntilBirthday(month=10, day=4){
+    // --- Core Functions ---
+
+    function daysUntilBirthday(month, day){
       const now = new Date();
       let year = now.getFullYear();
-      let target = new Date(year, month-1, day);
-      if(target < now){ target.setFullYear(year+1); }
-      const diff = Math.ceil((target - now)/(1000*60*60*24));
+      let target = new Date(year, month - 1, day);
+      // If birthday has passed this year, set target to next year
+      if(target < now){ target.setFullYear(year + 1); }
+      const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
       return diff;
     }
 
-    dcount.textContent = "D-" + daysUntilBirthday(10,4);
+    dcount.textContent = "D-" + daysUntilBirthday(BIRTHDAY_MONTH, BIRTHDAY_DAY);
 
-    function launchConfetti(){
-      for(let i=0;i<100;i++){
+    // --- Fireworks Function ---
+
+    function launchFireworks(){
+      const colors = ["#ff4d4d", "#ffd633", "#4dff4d", "#ff66cc", "#4d4dff", "#ffffff"]; // More colors including white
+      const numParticles = 80;
+      const duration = 2; // Shorter duration for quick flash
+
+      // Change background for effect
+      body.classList.add('fireworks-active');
+      setTimeout(() => body.classList.remove('fireworks-active'), 1500); // Revert background
+
+      for(let i = 0; i < numParticles; i++){
         const conf = document.createElement("div");
         conf.classList.add("confetti");
-        conf.style.setProperty("--color",["#ff4d4d","#4dff4d","#4d4dff","#ffd633","#ff66cc"][Math.floor(Math.random()*5)]);
-        conf.style.setProperty("--x", (Math.random()*600-300)+"px");
-        conf.style.left = (window.innerWidth/2)+"px";
-        conf.style.top = "0px";
+        
+        // Random color
+        conf.style.setProperty("--color", colors[Math.floor(Math.random() * colors.length)]);
+        
+        // Random angle and distance for 'explosion' effect (Polar to Cartesian)
+        const angle = Math.random() * 2 * Math.PI; // 0 to 360 degrees
+        const distance = Math.random() * 200 + 50; // Distance 50px to 250px
+        
+        // Calculate X and Y translation
+        conf.style.setProperty("--x", (Math.cos(angle) * distance) + "px");
+        conf.style.setProperty("--y", (Math.sin(angle) * distance) + "px");
+        
+        // Random duration for variety
+        conf.style.setProperty("--duration", (Math.random() * 1 + duration) + "s");
+
+        // Start position is center of the window
+        conf.style.left = (window.innerWidth / 2) + "px";
+        conf.style.top = (window.innerHeight / 2) + "px"; 
+
         document.body.appendChild(conf);
-        setTimeout(()=>conf.remove(),3000);
+
+        // Remove after animation
+        setTimeout(() => conf.remove(), (duration + 1) * 1000); 
       }
     }
+
+    // --- Event Handlers ---
 
     function tryOpen(){
       if(input.value === SECRET){
         env.classList.add("open");
-        launchConfetti();
+        
+        // Delay fireworks slightly after the card is open for better effect
+        setTimeout(launchFireworks, 500); 
+
       } else {
-        alert("รหัสไม่ถูกต้อง");
+        alert("รหัสไม่ถูกต้อง 🚫 ลองดูดีๆ นะคะ");
         input.value="";
+        input.focus();
       }
     }
-    btn.addEventListener("click",tryOpen);
-    input.addEventListener("keydown",e=>{
-      if(e.key==="Enter") tryOpen();
+    btn.addEventListener("click", tryOpen);
+    input.addEventListener("keydown", e => {
+      if(e.key === "Enter") tryOpen();
     });
   </script>
 </body>
 </html>
-```
