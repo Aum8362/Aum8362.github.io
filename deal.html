@@ -16,10 +16,11 @@
       background:#0f1724;
       font-family:"Kanit",sans-serif;
       gap:20px;
+      overflow:hidden;
     }
     .envelope{
       position:relative;
-      width:640px;   /* ขยาย 2 เท่า */
+      width:640px;
       height:400px;
       background:#f7f6f2;
       border-radius:16px;
@@ -28,20 +29,20 @@
     }
     .flap{
       position:absolute;
-      bottom:-2px; left:50%;
+      top:0; left:50%;
       transform:translateX(-50%);
       width:110%; height:240px;
       background:#fff;
-      clip-path:polygon(0 0,50% 100%,100% 0); /* กลับด้าน */
+      clip-path:polygon(0 100%,50% 0,100% 100%); /* สามเหลี่ยมชิดบน */
       border-radius:10px;
       transition:transform 1s;
       transform-origin:50% 0;
     }
     .card{
       position:absolute;
-      left:50%; top:40px;
+      left:50%; top:60px;
       transform:translateX(-50%) translateY(120%);
-      width:80%; height:300px;
+      width:80%; height:280px;
       background:#fff;
       border-radius:16px;
       box-shadow:0 20px 40px rgba(0,0,0,0.5);
@@ -52,6 +53,7 @@
       gap:20px;
       transition:transform 1s,opacity .5s;
       opacity:0;
+      text-align:center;
     }
     .card h2{margin:0;font-size:32px;color:#111;}
     .card p{margin:0;font-size:60px;font-weight:bold;}
@@ -79,8 +81,21 @@
       font-weight:bold;
       cursor:pointer;
     }
-    .envelope.open .flap{transform:translateX(-50%) rotateX(180deg);}
+    .envelope.open .flap{transform:translateX(-50%) rotateX(-180deg);}
     .envelope.open .card{transform:translateX(-50%) translateY(0);opacity:1;}
+    /* confetti */
+    .confetti{
+      position:absolute;
+      width:10px;height:20px;
+      background:var(--color);
+      top:0; left:50%;
+      opacity:0.9;
+      animation:fall 3s linear forwards;
+    }
+    @keyframes fall{
+      0%{transform:translateX(0) translateY(0) rotate(0);}
+      100%{transform:translateX(var(--x)) translateY(100vh) rotate(720deg);}
+    }
   </style>
 </head>
 <body>
@@ -117,9 +132,23 @@
 
     dcount.textContent = "D-" + daysUntilBirthday(10,4);
 
+    function launchConfetti(){
+      for(let i=0;i<100;i++){
+        const conf = document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.setProperty("--color",["#ff4d4d","#4dff4d","#4d4dff","#ffd633","#ff66cc"][Math.floor(Math.random()*5)]);
+        conf.style.setProperty("--x", (Math.random()*600-300)+"px");
+        conf.style.left = (window.innerWidth/2)+"px";
+        conf.style.top = "0px";
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),3000);
+      }
+    }
+
     function tryOpen(){
       if(input.value === SECRET){
         env.classList.add("open");
+        launchConfetti();
       } else {
         alert("รหัสไม่ถูกต้อง");
         input.value="";
