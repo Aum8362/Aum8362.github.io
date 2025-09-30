@@ -1,1 +1,336 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Secret Birthday Card</title>
+  <style>
+    :root{
+      --bg: #0f1724;
+      --envelope: #f7f6f2;
+      --accent: #ff6b6b;
+      --card: linear-gradient(135deg,#ffffff 0%, #fff4f4 100%);
+      --glass: rgba(255,255,255,0.06);
+      --shadow: 0 10px 30px rgba(2,6,23,0.6);
+      --glass-2: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, "Noto Sans", "Kanit", Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.02), transparent),
+                  linear-gradient(180deg,var(--bg), #071021 60%);
+      color:#0b1220;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    /* layout */
+    .stage{
+      width:360px;
+      max-width:94vw;
+      perspective:1200px;
+    }
+
+    /* envelope */
+    .envelope{
+      width:100%;
+      height:220px;
+      position:relative;
+      transform-style:preserve-3d;
+      transition:transform 1s cubic-bezier(.2,.9,.3,1);
+      cursor:default;
+      margin:0 auto;
+    }
+    .envelope .body{
+      position:absolute;
+      inset:0;
+      background:var(--envelope);
+      border-radius:12px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .envelope .inner{
+      width:92%;
+      height:84%;
+      background: linear-gradient(180deg,#fff 0,#f3f3f3 100%);
+      border-radius:10px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:10px;
+      padding:14px;
+      transform: translateZ(1px);
+    }
+
+    /* flap */
+    .flap{
+      position:absolute;
+      left:50%;
+      top:-2px;
+      transform-origin:50% 100%;
+      width:110%;
+      max-width:110%;
+      height:120px;
+      transform: translateX(-50%) rotateX(0deg);
+      transition: transform 0.9s cubic-bezier(.2,.9,.3,1);
+      pointer-events:none;
+    }
+    .flap::before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:0;
+      transform:translateX(-50%);
+      width:100%;
+      height:100%;
+      background: linear-gradient(180deg,#fff,#f2f2f2);
+      border-radius:10px;
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
+      box-shadow: 0 8px 24px rgba(2,6,23,0.45);
+    }
+
+    /* lock a small label */
+    .label{
+      position:absolute;
+      top:12px;
+      left:16px;
+      font-size:12px;
+      color:#6b7280;
+      background:var(--glass-2);
+      padding:6px 8px;
+      border-radius:8px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* input area */
+    .code-panel{
+      position:absolute;
+      bottom:14px;
+      left:50%;
+      transform:translateX(-50%);
+      width:86%;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      transition:opacity .4s;
+    }
+    .code-panel input{
+      width:170px;
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid rgba(10,10,10,0.06);
+      font-size:16px;
+      text-align:center;
+      letter-spacing:6px;
+    }
+    .code-panel button{
+      padding:10px 12px;
+      border-radius:10px;
+      border:0;
+      background:var(--accent);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow: 0 6px 18px rgba(255,107,107,0.2);
+    }
+    .hint{
+      position:absolute;
+      bottom:-36px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:13px;
+      color:#d1d5db;
+      text-align:center;
+      width:100%;
+    }
+
+    /* card inside envelope */
+    .card{
+      position:absolute;
+      left:50%;
+      top:18px;
+      transform:translateX(-50%) translateY(120%);
+      width:86%;
+      height:160px;
+      border-radius:12px;
+      background:var(--card);
+      box-shadow: 0 20px 40px rgba(2,6,23,0.5);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:6px;
+      padding:16px;
+      transition: transform 0.9s cubic-bezier(.2,.9,.3,1), opacity 0.3s;
+      opacity:0;
+    }
+
+    .card h2{
+      margin:0;
+      font-size:18px;
+      color:#111827;
+      letter-spacing:1px;
+    }
+    .card .big{
+      font-size:48px;
+      font-weight:700;
+      margin:0;
+      color: #0b1220;
+    }
+    .card .sub{
+      font-size:14px;
+      color:#374151;
+      margin-top:4px;
+    }
+
+    /* opened state */
+    .envelope.open .flap{ transform: translateX(-50%) rotateX(-180deg); }
+    .envelope.open .card{
+      transform:translateX(-50%) translateY(6%);
+      opacity:1;
+    }
+    .envelope.open .code-panel{ opacity:0; pointer-events:none; transform:translateY(10px); }
+
+    /* small top text */
+    .top-note{
+      margin-bottom:10px;
+      color:#e6eefc;
+      font-size:14px;
+      text-align:center;
+    }
+
+    /* success message */
+    .msg{
+      position:relative;
+      font-size:13px;
+      color:#6b7280;
+      margin-top:6px;
+    }
+
+    /* responsive */
+    @media (max-width:420px){
+      .card .big{ font-size:40px; }
+      .envelope{ height:200px }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="top-note">จดหมายลับ — ใส่รหัส 4 ตัวเพื่อเปิด</div>
+
+    <div class="envelope" id="envelope" aria-hidden="false">
+      <div class="flap" aria-hidden="true"></div>
+
+      <div class="body">
+        <div class="inner">
+          <div style="text-align:center">
+            <strong style="font-size:18px">You've got a secret</strong>
+            <div style="font-size:13px;color:#6b7280;margin-top:6px">ใส่รหัสวันเกิดเพื่อเปิดการ์ด</div>
+          </div>
+
+          <!-- card sits visually inside -->
+          <div class="card" id="card" aria-hidden="true">
+            <h2>Countdown</h2>
+            <p class="big" id="dcount">D-4</p>
+            <div class="sub">to Happy Birthday</div>
+          </div>
+
+        </div>
+
+        <div class="label">Private</div>
+
+        <div class="code-panel" id="panel">
+          <input id="code" type="password" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="____" aria-label="รหัส 4 ตัว">
+          <button id="openBtn" aria-label="เปิดจดหมาย">Open</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hint" id="hint">ตัวอย่างรหัส: 0410 (วันเกิดแฟน)</div>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <script>
+    (function(){
+      const SECRET = "0410";
+      const envelope = document.getElementById('envelope');
+      const openBtn = document.getElementById('openBtn');
+      const codeInput = document.getElementById('code');
+      const dcount = document.getElementById('dcount');
+      const hint = document.getElementById('hint');
+      const msg = document.getElementById('msg');
+
+      // compute days until next Oct 4
+      function daysUntilBirthday(month=10, day=4){
+        const now = new Date();
+        // target uses local timezone (month is 1-indexed here)
+        let year = now.getFullYear();
+        const target = new Date(year, month-1, day);
+        // if target already passed or today==target (we might want 0)
+        // we consider next year if date < today (midnight compare)
+        // compare by clearing time
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        if(target < today){
+          target.setFullYear(year+1);
+        }
+        const msPerDay = 1000*60*60*24;
+        const diff = Math.ceil((target - today) / msPerDay);
+        return diff;
+      }
+
+      function setCountdownText(){
+        const n = daysUntilBirthday(10,4);
+        dcount.textContent = "D-" + n;
+        // If you specifically want to show "D-4", you can force set to 4.
+        // But this will show actual remaining days to Oct 4.
+      }
+
+      setCountdownText();
+
+      // Open action
+      function tryOpen(){
+        const val = codeInput.value.trim();
+        if(val.length !== 4){
+          msg.textContent = "กรุณากรอกรหัส 4 ตัว";
+          return;
+        }
+        if(val === SECRET){
+          // success: reveal
+          envelope.classList.add('open');
+          setCountdownText(); // update days live
+          msg.textContent = "";
+          hint.style.display = 'none';
+          codeInput.value = '';
+          // optional: small confetti or focus card
+        } else {
+          msg.textContent = "รหัสไม่ถูกต้อง ลองใหม่อีกครั้ง";
+          codeInput.value = '';
+          codeInput.focus();
+        }
+      }
+
+      openBtn.addEventListener('click', tryOpen);
+      codeInput.addEventListener('keydown', function(e){
+        if(e.key === 'Enter') tryOpen();
+      });
+
+      // convenience: allow only digits
+      codeInput.addEventListener('input', function(){
+        this.value = this.value.replace(/\D/g,'').slice(0,4);
+      });
+    })();
+  </script>
+</body>
+</html>
 
