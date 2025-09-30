@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -9,77 +10,76 @@
       margin:0;
       height:100vh;
       display:flex;
+      flex-direction:column;
       justify-content:center;
       align-items:center;
       background:#0f1724;
       font-family:"Kanit",sans-serif;
+      gap:20px;
     }
     .envelope{
       position:relative;
-      width:320px;
-      height:200px;
+      width:640px;   /* ขยาย 2 เท่า */
+      height:400px;
       background:#f7f6f2;
-      border-radius:12px;
+      border-radius:16px;
       box-shadow:0 10px 30px rgba(0,0,0,0.5);
       overflow:hidden;
     }
     .flap{
       position:absolute;
-      top:-2px; left:50%;
+      bottom:-2px; left:50%;
       transform:translateX(-50%);
-      width:110%; height:120px;
+      width:110%; height:240px;
       background:#fff;
-      clip-path:polygon(0 100%,50% 0,100% 100%);
+      clip-path:polygon(0 0,50% 100%,100% 0); /* กลับด้าน */
       border-radius:10px;
       transition:transform 1s;
-      transform-origin:50% 100%;
+      transform-origin:50% 0;
     }
     .card{
       position:absolute;
-      left:50%; top:20px;
+      left:50%; top:40px;
       transform:translateX(-50%) translateY(120%);
-      width:80%; height:150px;
+      width:80%; height:300px;
       background:#fff;
-      border-radius:10px;
+      border-radius:16px;
       box-shadow:0 20px 40px rgba(0,0,0,0.5);
       display:flex;
       flex-direction:column;
       justify-content:center;
       align-items:center;
-      gap:10px;
+      gap:20px;
       transition:transform 1s,opacity .5s;
       opacity:0;
     }
-    .card h2{margin:0;font-size:20px;color:#111;}
-    .card p{margin:0;font-size:40px;font-weight:bold;}
-    .card small{color:#555}
+    .card h2{margin:0;font-size:32px;color:#111;}
+    .card p{margin:0;font-size:60px;font-weight:bold;}
+    .card small{color:#555;font-size:20px}
     .code-panel{
-      position:absolute;
-      bottom:15px;
-      left:50%;
-      transform:translateX(-50%);
       display:flex;
-      gap:10px;
+      gap:15px;
     }
     .code-panel input{
-      width:120px;
-      padding:8px;
-      font-size:18px;
+      width:160px;
+      padding:10px;
+      font-size:22px;
       text-align:center;
-      letter-spacing:4px;
-      border-radius:8px;
+      letter-spacing:6px;
+      border-radius:10px;
       border:1px solid #aaa;
     }
     .code-panel button{
-      padding:8px 12px;
+      padding:10px 20px;
       border:0;
-      border-radius:8px;
+      border-radius:10px;
       background:#ff6b6b;
       color:#fff;
+      font-size:18px;
       font-weight:bold;
       cursor:pointer;
     }
-    .envelope.open .flap{transform:translateX(-50%) rotateX(-180deg);}
+    .envelope.open .flap{transform:translateX(-50%) rotateX(180deg);}
     .envelope.open .card{transform:translateX(-50%) translateY(0);opacity:1;}
   </style>
 </head>
@@ -92,11 +92,11 @@
       <p id="dcount">D-4</p>
       <small>to Happy Birthday</small>
     </div>
+  </div>
 
-    <div class="code-panel">
-      <input id="code" type="text" maxlength="4" placeholder="****" />
-      <button id="openBtn">Open</button>
-    </div>
+  <div class="code-panel">
+    <input id="code" type="text" maxlength="4" placeholder="****" />
+    <button id="openBtn">Open</button>
   </div>
 
   <script>
@@ -132,3 +132,4 @@
   </script>
 </body>
 </html>
+```
